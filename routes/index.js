@@ -6,8 +6,8 @@ const configChannel = require('../config/channel')
 const mainController = require('../controller/mainController')
 
 const config = {
-  channelAccessToken: configChannel.CHANNEL_ACCESS_TOKEN,
-  channelSecret: configChannel.CHANNEL_SECRET
+  channelAccessToken: `${configChannel.CHANNEL_ACCESS_TOKEN}`,
+  channelSecret: `${configChannel.CHANNEL_SECRET}`
 }
 const client = new line.Client(config)
 
