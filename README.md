@@ -11,3 +11,7 @@ soon
 
 ### How to deploy
 Make sure you have passed linting code, connect to Heroku repository, and commit changes. Then type `npm run deploy:heroku`
+
+
+##### Javascript linting code
+Type `npm run lint`
