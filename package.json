@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "npm run lint && node app.js",
-    "lint": "standard"
+    "start": "npm install && node app.js",
+    "lint": "standard",
+    "deploy:heroku": "git push heroku master"
   },
   "dependencies": {
     "@line/bot-sdk": "^6.1.0",

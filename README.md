@@ -10,4 +10,4 @@ soon
 2. type: `npm start` to start locally
 
 ### How to deploy
-Type `npm run deploy:heroku`
+Make sure you have passed linting code, connect to Heroku repository, and commit changes. Then type `npm run deploy:heroku`
