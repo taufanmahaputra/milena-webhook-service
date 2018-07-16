@@ -9,6 +9,7 @@ const config = {
   channelAccessToken: `${configChannel.CHANNEL_ACCESS_TOKEN}`,
   channelSecret: `${configChannel.CHANNEL_SECRET}`
 }
+console.log(config)
 const client = new line.Client(config)
 
 router.post('/', line.middleware(config), (req, res) => {
