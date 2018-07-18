@@ -103,9 +103,9 @@ exports.setupCalendar = (event) => {
       type: "template",
       altText: "this is a confirm template",
       template: {
-        type: "confirm",
-        text: "url",
-        actions: [
+        type: "buttons",
+        text: "Please go to this link, and save following token for next step.",
+        defaultAction: [
           {
             type:"uri",
             label:"get token",
