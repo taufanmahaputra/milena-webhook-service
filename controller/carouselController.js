@@ -1,3 +1,5 @@
+const util = require('./util')
+
 exports.newCarouselMessage = (altText) => {
   var message = {
     'type': 'template',
@@ -16,8 +18,8 @@ exports.newColumn = (imageUrl, backgroundColor, title, desc, defUrl, actions) =>
   var col = {
     'thumbnailImageUrl': imageUrl,
     'imageBackgroundColor': backgroundColor,
-    'title': title,
-    'text': desc,
+    'title': util.trimString(title, 40),
+    'text': util.trimString(desc, 60),
     'defaultAction': {
       'type': 'uri',
       'label': 'View detail',

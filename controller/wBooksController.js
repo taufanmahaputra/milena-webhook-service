@@ -23,11 +23,11 @@ exports.sendBookRecommendation = (client, event, bookData) => {
   if (bookCarousel.template.columns.length <= 0) {
     return client.replyMessage(event.replyToken, defaultAnswer)
   }
-  return client.replyMessage(event.replyToken,bookCarousel).
-    then(() => {
+  return client.replyMessage(event.replyToken, bookCarousel)
+    .then(() => {
       console.log('sukses reply books')
     })
     .catch((err) => {
-      console.log(err);
-    });
+      console.log(err)
+    })
 }
