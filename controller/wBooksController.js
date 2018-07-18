@@ -27,5 +27,11 @@ exports.sendBookRecommendation = (client, event, bookData) => {
     return client.replyMessage(event.replyToken, defaultAnswer)
   }
   console.log(bookCarousel)
-  return client.replyMessage(event.replyToken, bookCarousel)
+  return client.replyMessage(event.replyToken, bookCarousel).
+    then(() => {
+      console.log('sukses')
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
