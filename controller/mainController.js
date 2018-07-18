@@ -64,6 +64,7 @@ exports.handleEvent = (client, event) => {
   }
 
   if (event.message.text.toLowerCase() === '/books') {
+    console.log('get book recommendation')
     return wBooksController.sendBookRecommendation(client, event, bookResultDummy)
   }
   // TODO: if your confidition, do return your result from your controller
