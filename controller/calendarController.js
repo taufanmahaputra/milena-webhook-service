@@ -27,7 +27,7 @@ function authorize(credentials, callback) {
  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
  * @param {getEventsCallback} callback The callback for the authorized client.
  */
-function getAccessToken(oAuth2Client, callback) {
+function getAccessToken(oAuth2Client) {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
     scope: SCOPES,
@@ -96,7 +96,7 @@ exports.setupCalendar = (event) => {
     const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris[0]);
 
-    const url = getAccessToken(oAuth2Client, callback);
+    const url = getAccessToken(oAuth2Client);
     console.log(url);
     console.log('setup calendar stop')
     return {
