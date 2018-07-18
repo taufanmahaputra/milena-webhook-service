@@ -27,7 +27,34 @@ exports.sendBookRecommendation = (client, event, bookData) => {
     return client.replyMessage(event.replyToken, defaultAnswer)
   }
   console.log(bookCarousel)
-  return client.replyMessage(event.replyToken, bookCarousel).
+  return client.replyMessage(event.replyToken,
+    {
+      type: 'template',
+      altText: 'Carousel alt text',
+      template: {
+        type: 'carousel',
+        columns: [
+          {
+            thumbnailImageUrl: 'https://cdn0.iconfinder.com/data/icons/tutor-icon-set/512/set_of_three_books-512.png',
+            title: 'hoge',
+            text: 'fuga',
+            actions: [
+              { label: 'Go to line.me', type: 'uri', uri: 'https://line.me' },
+              { label: 'Say hello1', type: 'postback', data: 'hello こんにちは' },
+            ],
+          },
+          {
+            thumbnailImageUrl: 'https://cdn0.iconfinder.com/data/icons/tutor-icon-set/512/set_of_three_books-512.png',
+            title: 'hoge',
+            text: 'fuga',
+            actions: [
+              { label: '言 hello2', type: 'postback', data: 'hello こんにちは', text: 'hello こんにちは' },
+              { label: 'Say message', type: 'message', text: 'Rice=米' },
+            ],
+          },
+        ],
+      },
+    }).
     then(() => {
       console.log('sukses')
     })
