@@ -21,14 +21,14 @@ var bookResultDummy = [{
   ],
   'maturityRating': 'NOT_MATURE',
   'imageLinks': {
-    'smallThumbnail': 'http://books.google.com/books/content?id=yjdQ8jTuCfgC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api',
-    'thumbnail': 'http://books.google.com/books/content?id=yjdQ8jTuCfgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+    'smallThumbnail': 'https://books.google.com/books/content?id=yjdQ8jTuCfgC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api',
+    'thumbnail': 'https://books.google.com/books/content?id=yjdQ8jTuCfgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
   },
   'language': 'en',
-  'previewLink': 'http://books.google.co.id/books?id=rXM1DgAAQBAJ&printsec=frontcover&dq=medical&hl=&cd=1&source=gbs_api',
-  'infoLink': 'http://books.google.co.id/books?id=rXM1DgAAQBAJ&dq=medical&hl=&source=gbs_api',
+  'previewLink': 'https://books.google.co.id/books?id=rXM1DgAAQBAJ&printsec=frontcover&dq=medical&hl=&cd=1&source=gbs_api',
+  'infoLink': 'https://books.google.co.id/books?id=rXM1DgAAQBAJ&dq=medical&hl=&source=gbs_api',
   'canonicalVolumeLink': 'https://books.google.com/books/about/Medical_and_Psychosocial_Aspects_of_Chro.html?hl=&id=rXM1DgAAQBAJ',
-  'webReaderLink': 'http://play.google.com/books/reader?id=rXM1DgAAQBAJ&hl=&printsec=frontcover&source=gbs_api'
+  'webReaderLink': 'https://play.google.com/books/reader?id=rXM1DgAAQBAJ&hl=&printsec=frontcover&source=gbs_api'
 },
 {
   'id': 'yjdQ8jTuCfgC',
@@ -47,14 +47,14 @@ var bookResultDummy = [{
   ],
   'maturityRating': 'NOT_MATURE',
   'imageLinks': {
-    'smallThumbnail': 'http://books.google.com/books/content?id=rXM1DgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api',
-    'thumbnail': 'http://books.google.com/books/content?id=rXM1DgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
+    'smallThumbnail': 'https://books.google.com/books/content?id=rXM1DgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api',
+    'thumbnail': 'https://books.google.com/books/content?id=rXM1DgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'
   },
   'language': 'en',
-  'previewLink': 'http://books.google.co.id/books?id=yjdQ8jTuCfgC&printsec=frontcover&dq=medical&hl=&cd=2&source=gbs_api',
+  'previewLink': 'https://books.google.co.id/books?id=yjdQ8jTuCfgC&printsec=frontcover&dq=medical&hl=&cd=2&source=gbs_api',
   'infoLink': 'https://play.google.com/store/books/details?id=yjdQ8jTuCfgC&source=gbs_api',
   'canonicalVolumeLink': 'https://market.android.com/details?id=book-yjdQ8jTuCfgC',
-  'webReaderLink': 'http://play.google.com/books/reader?id=yjdQ8jTuCfgC&hl=&printsec=frontcover&source=gbs_api'
+  'webReaderLink': 'https://play.google.com/books/reader?id=yjdQ8jTuCfgC&hl=&printsec=frontcover&source=gbs_api'
 }]
 
 exports.handleEvent = (client, event) => {
