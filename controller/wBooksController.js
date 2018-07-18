@@ -15,7 +15,7 @@ exports.sendBookRecommendation = (client, event, bookData) => {
     {
       'type': 'uri',
       'label': 'Read Now',
-      'url': book.accessInfo.webReaderLink
+      'url': book.webReaderLink
     }]
     var columns = carouselController.newColumn(book.imageLinks.thumbnail, '#FFFFFF', book.title, book.description, book.infoLink, actions)
     bookCarousel.template.columns.concat(columns)
