@@ -82,8 +82,9 @@ function listEvents(auth) {
 }
 
 exports.setupCalendar = (event) => {
+  console.log('setup calendar start')
   // Load client secrets from a local file.
-  fs.readFile('../credentials.json', (err, content) => {
+  return fs.readFile('../credentials.json', (err, content) => {
     if (err) return {type: 'text', text: 'error read file'}
     // Authorize a client with credentials, then call the Google Calendar API.
     // authorize(JSON.parse(content), listEvents);
@@ -93,6 +94,8 @@ exports.setupCalendar = (event) => {
       client_id, client_secret, redirect_uris[0]);
 
     const url = getAccessToken(oAuth2Client, callback);
+    console.log(url);
+    console.log('setup calendar stop')
     return {
       type: "template",
       altText: "this is a confirm template",
