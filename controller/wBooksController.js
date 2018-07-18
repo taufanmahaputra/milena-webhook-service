@@ -6,6 +6,10 @@ exports.sendBookRecommendation = (client, event, bookData) => {
     'type': 'text',
     'text': 'Books not found'
   }
+  console.log(bookData)
+  if (bookData.length <= 0) {
+    return client.replyMessage(event.replyToken, defaultAnswer)
+  }
   bookData.forEach(book => {
     var actions = [{
       'type': 'postback',
@@ -20,8 +24,6 @@ exports.sendBookRecommendation = (client, event, bookData) => {
     var columns = carouselController.newColumn(book.imageLinks.thumbnail, '#FFFFFF', book.title, book.description, book.infoLink, actions)
     bookCarousel.template.columns.concat(columns)
   })
-  if (bookCarousel.template.columns.length <= 0) {
-    return client.replyMessage(event.replyToken, defaultAnswer)
-  }
+  console.log(bookCarousel)
   return client.replyMessage(event.replyToken, bookCarousel)
 }
