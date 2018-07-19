@@ -6,7 +6,7 @@ exports.handleEvent = (client, event) => {
     // ignore non-text-message event
     return Promise.resolve(null)
   }
-  
+
   if (event.message.text.toLowerCase() === '/init_calendar') {
     return client.replyMessage(event.replyToken, calendarController.setupCalendar(event))
   }
