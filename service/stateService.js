@@ -15,7 +15,7 @@ exports.initState = (data) => {
 }
 
 exports.getStateByUserId = (userId) => {
-  return State.findOne({'data.userId': userId}, stateFindOneCallback)
+  return State.findOne({'data.userId': userId}, stateFindOneCallback).exec()
 }
 
 exports.setStateGoogleAuthCode = (state, code) => {
