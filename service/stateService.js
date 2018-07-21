@@ -14,8 +14,8 @@ exports.initState = (data) => {
   state.save()
 }
 
-exports.getStateByUserId = async (userId) => {
-  await State.findOne({'data.userId': userId}, stateFindOneCallback)
+exports.getStateByUserId = (userId) => {
+  State.findOne({'data.userId': userId}, stateFindOneCallback)
   return current_state
 }
 
