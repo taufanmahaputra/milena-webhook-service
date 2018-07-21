@@ -20,6 +20,8 @@ exports.getStateByUserId = async (userId) => {
 
     current_state = state
   })
+  console.log('stateService.getStateByUserId')
+  console.log(current_state)
   return current_state
 }
 

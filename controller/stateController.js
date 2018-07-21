@@ -8,7 +8,10 @@ exports.initStateUser = (event) => {
 }
 
 exports.getStateByUserId = (event) => {
-  return stateService.getStateByUserId(event.source.userId)
+  const state = stateService.getStateByUserId(event.source.userId)
+  console.log('stateController.getStateByUserId')
+  console.log(state)
+  return state
 }
 
 exports.setStateGoogleAuthCode = (state, code) => {
