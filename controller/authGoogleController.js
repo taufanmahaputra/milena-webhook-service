@@ -124,7 +124,7 @@ exports.setupAuthClientGoogle = (event) => {
   const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0])
   const inputs = event.message.text.split(' ')
 
-  stateController.getStateByUserId(event)
+  console.log(stateController.getStateByUserId(event))
   // stateController.getStateByUserId(event, (state) => {
   //   let currState = state
   //

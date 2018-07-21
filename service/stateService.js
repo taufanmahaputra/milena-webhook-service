@@ -15,12 +15,7 @@ exports.initState = (data) => {
 }
 
 exports.getStateByUserId = async (userId) => {
-  await State.findOne({'data.userId': userId}, function (err, state) {
-    if (err || !state) current_state = null
-
-    current_state = state
-  })
-  console.log(current_state)
+  await State.findOne({'data.userId': userId}, getStateByUserIdCallback)
   return current_state
 }
 
@@ -32,3 +27,9 @@ exports.setStateGoogleAuthToken = (state, token) => {
   State.findOneAndUpdate({'data.userId': state.data.userId}, {'data.googleAuthToken': token, 'data.isConfirmedAuthGoogle': true})
 }
 
+
+function getStateByUserIdCallback (err, state) {
+  if (err || !state) current_state = null
+
+  current_state = state
+}
