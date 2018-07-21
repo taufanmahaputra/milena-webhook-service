@@ -5,8 +5,9 @@ const stateSchema = mongoose.Schema({
     userId: {type: String, unique: true},
     googleAuthCode: String,
     googleAuthToken: String,
-    isConfirmedAuthGoogle: Boolean
+    isConfirmedAuthGoogle: Boolean,
+    isFollowingBot: Boolean
   }
 });
 
-module.exports = mongoose.model('State', gameSchema);
+module.exports = mongoose.model('State', stateSchema);
