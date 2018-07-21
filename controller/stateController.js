@@ -8,13 +8,6 @@ exports.initStateUser = (event) => {
 }
 
 exports.getStateByUserId = (event) => {
-  // let state = new Promise((reject, resolve) => {
-  //   resolve(stateService.getStateByUserId(event.source.userId))
-  // })
-  // state.then((result) => {
-  //   console.log(result)
-  // })
-  // noinspection JSAnnotator
   return stateService.getStateByUserId(event.source.userId)
 }
 
