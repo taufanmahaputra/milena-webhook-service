@@ -9,11 +9,10 @@ exports.initStateUser = (event) => {
 
 exports.getStateByUserId = (event, cb) => {
   let state = stateService.getStateByUserId(event.source.userId)
-  state.then((err, result) => {
+  state.then((result) => {
     console.log('StateController.getStateByUserId')
-    console.log(err)
     console.log(result)
-    if (err || !result) {cb(null)}
+    if (!result) {cb(null)}
 
     cb(result)
   })
