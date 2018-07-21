@@ -9,10 +9,13 @@ exports.initStateUser = (event) => {
 
 exports.getStateByUserId = (event, cb) => {
   let state = stateService.getStateByUserId(event.source.userId)
-  state.then((err, state) => {
-    if (err || !state) {cb(null)}
+  state.then((err, result) => {
+    console.log('StateController.getStateByUserId')
+    console.log(err)
+    console.log(result)
+    if (err || !result) {cb(null)}
 
-    cb(state)
+    cb(result)
   })
 }
 
