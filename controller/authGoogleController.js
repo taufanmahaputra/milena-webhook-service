@@ -136,23 +136,24 @@ getAccessToken = (state, oAuth2Client, code) => {
 }
 
 exports.setupAuthClientGoogle = (event) => {
-  const state = stateController.getStateByUserId(event)
   const {client_secret, client_id, redirect_uris} = credentials.installed
-  const oAuth2Client = new google.auth.OAuth2(
-    client_id, client_secret, redirect_uris[0])
-
+  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0])
   const inputs = event.message.text.split(' ')
 
-  if (state.data.googleAuthCode === '') {
-    return getAccessCode(state, oAuth2Client)
-  }
-  else if (state.data.googleAuthToken === '' && inputs.length > 1) {
-    return getAccessToken(state, oAuth2Client,  inputs[1])
-  }
-  else if (state.data.isConfirmedAuthGoogle){
-    return {type: 'text', text: 'Already authenticated. You are ready to go!'}
-  }
-  else {
-    return {type: 'text', text: 'Command error. Please input correctly \'/init_google {your_code}\''}
-  }
+  stateController.getStateByUserId(event, (state) => {
+    let currState = state
+    
+    if (currState.data.googleAuthCode === '') {
+      return getAccessCode(currState, oAuth2Client)
+    }
+    else if (currState.data.googleAuthToken === '' && inputs.length > 1) {
+      return getAccessToken(currState, oAuth2Client,  inputs[1])
+    }
+    else if (currState.data.isConfirmedAuthGoogle){
+      return {type: 'text', text: 'Already authenticated. You are ready to go!'}
+    }
+    else {
+      return {type: 'text', text: 'Command error. Please input correctly \'/init_google {your_code}\''}
+    }
+  })
 }

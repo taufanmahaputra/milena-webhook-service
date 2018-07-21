@@ -7,11 +7,13 @@ exports.initStateUser = (event) => {
   stateService.initState(state)
 }
 
-exports.getStateByUserId = (event) => {
+exports.getStateByUserId = (event, cb) => {
   let state = stateService.getStateByUserId(event.source.userId)
-  console.log("stateController.getStateByUserId")
-  console.log(state)
-  return state ? state : null
+  state.then((err, state) => {
+    if (err || !state) {cb(null)}
+
+    cb(state)
+  })
 }
 
 exports.setStateGoogleAuthCode = (state, code) => {
