@@ -15,7 +15,7 @@ exports.getStateByUserId = (event) => {
   //   console.log(result)
   // })
   // noinspection JSAnnotator
-  return yield stateService.getStateByUserId(event.source.userId)
+  return stateService.getStateByUserId(event.source.userId)
 }
 
 exports.setStateGoogleAuthCode = (state, code) => {

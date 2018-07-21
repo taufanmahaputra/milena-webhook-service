@@ -1,5 +1,4 @@
 const State = require('../models/state')
-var co = require('co')
 let current_state
 
 exports.initState = (data) => {
@@ -15,16 +14,14 @@ exports.initState = (data) => {
   state.save()
 }
 
-exports.getStateByUserId = (userId) => {
-  return co(function *() {
-    let getState = yield State.findOne({'data.userId': userId}, function (err, state) {
-      if (err || !state) current_state = null
+exports.getStateByUserId = async (userId) => {
+  await State.findOne({'data.userId': userId}, function (err, state) {
+    if (err || !state) current_state = null
 
-      current_state = state
-      console.log(state)
-    })
-    return current_state
+    current_state = state
   })
+  console.log(current_state)
+  return current_state
 }
 
 exports.setStateGoogleAuthCode = (state, code) => {
