@@ -1,4 +1,5 @@
 const State = require('../models/state')
+let current_state
 
 exports.initState = (data) => {
   let state = new State({
@@ -14,8 +15,11 @@ exports.initState = (data) => {
 }
 
 exports.getStateByUserId = (userId) => {
-  console.log(userId)
-  State.findOne({'data.userId': userId}, stateFindOneCallback)
+  var getState = State.findOne({'data.userId': userId}, stateFindOneCallback).exec()
+  getState.then(function (state) {
+    console.log(state)
+    return state
+  });
 }
 
 exports.setStateGoogleAuthCode = (state, code) => {
@@ -30,7 +34,7 @@ function stateFindOneCallback (err, state) {
   console.log('stateService.stateFindOneCallback')
   console.log(`Error: ${err}`)
   console.log(`State: ${state}`)
-  if (err || !state) { return null }
+  if (err || !state) { current_state = null }
 
-  return state
+  current_state = state
 }
