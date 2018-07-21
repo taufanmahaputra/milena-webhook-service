@@ -10,8 +10,6 @@ exports.initStateUser = (event) => {
 exports.getStateByUserId = (event, cb) => {
   let state = stateService.getStateByUserId(event.source.userId)
   state.then((result) => {
-    console.log('StateController.getStateByUserId')
-    console.log(result)
     if (!result) {cb(null)}
 
     cb(result)
