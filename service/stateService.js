@@ -14,6 +14,7 @@ exports.initState = (data) => {
 }
 
 exports.getStateByUserId = (userId) => {
+  console.log(userId)
   State.findOne({'data.userId': userId}, stateFindOneCallback)
 }
 
@@ -26,6 +27,9 @@ exports.setStateGoogleAuthToken = (state, token) => {
 }
 
 function stateFindOneCallback (err, state) {
+  console.log('stateService.stateFindOneCallback')
+  console.log(`Error: ${err}`)
+  console.log(`State: ${state}`)
   if (err || !state) { return null }
 
   return state
