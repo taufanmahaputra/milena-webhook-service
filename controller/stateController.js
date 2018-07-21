@@ -7,12 +7,12 @@ exports.initStateUser = (event) => {
   stateService.initState(state)
 }
 
-exports.getStateByUserId = (event, cb) => {
-  let state = stateService.getStateByUserId(event.source.userId)
+exports.getStateByUserId = (event) => {
+  let state = new Promise((reject, resolve) => {
+    resolve(stateService.getStateByUserId(event.source.userId))
+  })
   state.then((result) => {
-    if (!result) {cb(null)}
-
-    cb(result)
+    console.log(result)
   })
 }
 

@@ -124,41 +124,42 @@ exports.setupAuthClientGoogle = (event) => {
   const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0])
   const inputs = event.message.text.split(' ')
 
-  stateController.getStateByUserId(event, (state) => {
-    let currState = state
-
-    if (currState.data.googleAuthCode === '') {
-      const url = getAccessCodeUrl(oAuth2Client)
-      return {
-        type: 'template',
-        altText: 'Get your access code here',
-        template: {
-          type: 'buttons',
-          text: 'Please go to this link, and save following code for next step.',
-          actions: [
-            {
-              type: 'uri',
-              label: 'Get Code',
-              uri: url
-            }
-          ]
-        }
-      }
-    }
-    else if (currState.data.googleAuthToken === '' && inputs.length > 1) {
-      getAccessToken(currState, oAuth2Client,  inputs[1], (tokenGranted) => {
-        if (tokenGranted) {
-          return {type: 'text', text: 'Congratulations! Succesfully registered to this xxxx@gmail.com account'}
-        }
-        return {type: 'text', text: 'Code error/expire. Please try \'/init_google\' again'}
-      })
-
-    }
-    else if (currState.data.isConfirmedAuthGoogle){
-      return {type: 'text', text: 'Already authenticated. You are ready to go!'}
-    }
-    else {
-      return {type: 'text', text: 'Command error. Please input correctly \'/init_google {your_code}\''}
-    }
-  })
+  stateController.getStateByUserId(event)
+  // stateController.getStateByUserId(event, (state) => {
+  //   let currState = state
+  //
+  //   if (currState.data.googleAuthCode === '') {
+  //     const url = getAccessCodeUrl(oAuth2Client)
+  //     return {
+  //       type: 'template',
+  //       altText: 'Get your access code here',
+  //       template: {
+  //         type: 'buttons',
+  //         text: 'Please go to this link, and save following code for next step.',
+  //         actions: [
+  //           {
+  //             type: 'uri',
+  //             label: 'Get Code',
+  //             uri: url
+  //           }
+  //         ]
+  //       }
+  //     }
+  //   }
+  //   else if (currState.data.googleAuthToken === '' && inputs.length > 1) {
+  //     getAccessToken(currState, oAuth2Client,  inputs[1], (tokenGranted) => {
+  //       if (tokenGranted) {
+  //         return {type: 'text', text: 'Congratulations! Succesfully registered to this xxxx@gmail.com account'}
+  //       }
+  //       return {type: 'text', text: 'Code error/expire. Please try \'/init_google\' again'}
+  //     })
+  //
+  //   }
+  //   else if (currState.data.isConfirmedAuthGoogle){
+  //     return {type: 'text', text: 'Already authenticated. You are ready to go!'}
+  //   }
+  //   else {
+  //     return {type: 'text', text: 'Command error. Please input correctly \'/init_google {your_code}\''}
+  //   }
+  // })
 }
