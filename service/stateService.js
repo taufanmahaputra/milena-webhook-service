@@ -1,4 +1,5 @@
 const State = require('../models/state')
+var co = require('co')
 let current_state
 
 exports.initState = (data) => {
@@ -15,9 +16,14 @@ exports.initState = (data) => {
 }
 
 exports.getStateByUserId = (userId) => {
-  let getState = State.findOne({'data.userId': userId}).exec()
-  getState.then((state) => {
-    resolve(state)
+  return co(function *() {
+    let getState = yield State.findOne({'data.userId': userId}, function (err, state) {
+      if (err || !state) current_state = null
+
+      current_state = state
+      console.log(state)
+    })
+    return current_state
   })
 }
 

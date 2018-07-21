@@ -8,12 +8,14 @@ exports.initStateUser = (event) => {
 }
 
 exports.getStateByUserId = (event) => {
-  let state = new Promise((reject, resolve) => {
-    resolve(stateService.getStateByUserId(event.source.userId))
-  })
-  state.then((result) => {
-    console.log(result)
-  })
+  // let state = new Promise((reject, resolve) => {
+  //   resolve(stateService.getStateByUserId(event.source.userId))
+  // })
+  // state.then((result) => {
+  //   console.log(result)
+  // })
+  // noinspection JSAnnotator
+  return yield stateService.getStateByUserId(event.source.userId)
 }
 
 exports.setStateGoogleAuthCode = (state, code) => {
