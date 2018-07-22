@@ -14,6 +14,8 @@ exports.handleEvent = (client, event) => {
   }
   else if (eventValidator.isMessageAndTextMessageType(event) && event.message.text.toLowerCase() === '/list_events') {
     googleController.listEventsOnCalendar(client, event)
+  }else if (eventValidator.isMessageAndTextMessageType(event) && event.message.text.toLowerCase() === '/books') {
+    wBooksController.getBookRecommendation("database")
   }
 
   // TODO: if your confidition, do return your result from your controller

@@ -180,6 +180,16 @@ sendRequest = (path, params, callback) => {
   })
 }
 
+exports.getBookRecommendation = (query) => {
+  search(query, function(error, results) {
+    if ( ! error ) {
+        console.log(results);
+    } else {
+        console.log(error);
+    }
+});
+}
+
 exports.sendBookRecommendation = (client, event, bookData) => {
   var bookCarousel = carouselController.newCarouselMessage('Book Carousel')
   var defaultAnswer = {
