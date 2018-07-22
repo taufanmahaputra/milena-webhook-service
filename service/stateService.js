@@ -25,11 +25,17 @@ exports.getStateByUserId = async (userId) => {
   return current_state
 }
 
-exports.setStateGoogleAuthCode = async (state, code) => {
-  await State.findOneAndUpdate({'data.userId': state.data.userId}, {'data.googleAuthCode': code})
+exports.setStateGoogleAuthCode = (state, code) => {
+  State.findOneAndUpdate({'data.userId': state.data.userId}, {'data.googleAuthCode': code}, function (err, code) {
+    console.log(err)
+    console.log(code)
+  })
 }
 
-exports.setStateGoogleAuthToken = async (state, token) => {
-  await State.findOneAndUpdate({'data.userId': state.data.userId}, {'data.googleAuthToken': token, 'data.isConfirmedAuthGoogle': true})
+exports.setStateGoogleAuthToken = (state, token) => {
+  State.findOneAndUpdate({'data.userId': state.data.userId}, {'data.googleAuthToken': token, 'data.isConfirmedAuthGoogle': true}, function(err, code) {
+    console.log(err)
+    console.log(code)
+  })
 }
 
