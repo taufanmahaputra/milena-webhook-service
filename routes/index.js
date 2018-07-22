@@ -14,7 +14,7 @@ const client = new line.Client(config)
 
 router.post('/', line.middleware(config), (req, res) => {
   Promise
-    .all(req.body.events.map(event => { return mainController.handleEvent(client, event) }))
+    .all(req.body.events.map(event => { mainController.handleEvent(client, event) }))
     .then((result) => res.json(result))
     .catch((err) => {
       console.error(err)
