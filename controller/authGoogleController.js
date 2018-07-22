@@ -118,7 +118,7 @@ getAccessToken = async (state, oAuth2Client, code) => {
     console.log(`Error get token: ${err}`)
     if (err) result = false
 
-    stateController.setStateGoogleAuthToken(state, token)
+    stateController.setStateGoogleAuthToken(state, token.access_token)
     oAuth2Client.setCredentials(token)
     result = true
   })
