@@ -165,7 +165,7 @@ exports.setupAuthClientGoogle = async (event) => {
     }
   }
 
-  if (currState.data.isConfirmedAuthGoogle) {
+  if (state.data.isConfirmedAuthGoogle) {
     return {type: 'text', text: 'Already authenticated. You are ready to go!'}
   }
 }
