@@ -6,7 +6,12 @@ exports.initState = (data) => {
     data: {
       userId: data.userId,
       googleAuthCode: '',
-      googleAuthToken: '',
+      token: {
+        access_token: '',
+        token_type: '',
+        refresh_token: '',
+        expiry_date: 0
+      },
       isConfirmedAuthGoogle: false,
       isFollowingBot: true
     }
