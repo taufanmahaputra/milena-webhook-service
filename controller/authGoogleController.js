@@ -16,69 +16,6 @@ function authorize (credentials, callback) {
   })
 }
 
-function getAccessToken (oAuth2Client) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: SCOPES
-  })
-  console.log('Authorize this app by visiting this url:', authUrl)
-
-  return authUrl
-  // const rl = readline.createInterface({
-  //   input: process.stdin,
-  //   output: process.stdout,
-  // });
-  // rl.question('Enter the code from that page here: ', (code) => {
-  //   rl.close();
-  //   oAuth2Client.getToken(code, (err, token) => {
-  //     if (err) return callback(err);
-  //     oAuth2Client.setCredentials(token);
-  //     // Store the token to disk for later program executions
-  //     fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-  //       if (err) console.error(err);
-  //       console.log('Token stored to', TOKEN_PATH);
-  //     });
-  //     callback(oAuth2Client);
-  //   });
-  // });
-}
-
-exports.setupCalendar = (event) => {
-  console.log('setup calendar start')
-  // Load client secrets from a local file.
-  // fs.readFile('credentials.json', (err, content) => {
-  //   if (err) {
-  //     console.log(err)
-  //     return {type: 'text', text: 'error read file'}
-  //   }
-  // Authorize a client with credentials, then call the Google Calendar API.
-  // authorize(JSON.parse(content), listEvents);
-
-  const {client_secret, client_id, redirect_uris} = credentials.installed
-  const oAuth2Client = new google.auth.OAuth2(
-    client_id, client_secret, redirect_uris[0])
-
-  const url = getAccessToken({state: oAuth2Client})
-  console.log(url)
-  console.log('setup calendar stop')
-  return {
-    type: 'template',
-    altText: 'this is a confirm template',
-    template: {
-      type: 'buttons',
-      text: 'Please go to this link, and save following token for next step.',
-      actions: [
-        {
-          type: 'uri',
-          label: 'get token',
-          uri: url
-        }
-      ]
-    }
-  }
-  // });
-}
-
 function listEvents (auth) {
   const calendar = google.calendar({version: 'v3', auth})
   calendar.events.list({
@@ -113,20 +50,15 @@ getAccessCodeUrl = (oAuth2Client) => {
 
 getAccessToken = (parameters) => {
   let {state, oAuth2Client, code} = parameters
-  console.log(`Code: ${code}`)
   return new Promise((resolve, reject) => {
     oAuth2Client.getToken(code, (err, token) => {
       stateController.setStateGoogleAuthCode(state, code)
-      console.log(`Error get token: ${err}`)
       if (err) reject(false)
-
+      console.log(token)
       stateController.setStateGoogleAuthToken(state, token.access_token)
-      oAuth2Client.setCredentials(token)
       resolve(true)
     })
   })
-  // console.log(`Result get token: ${result}`)
-  // return result
 }
 
 exports.setupAuthClientGoogle = async (client, event) => {
