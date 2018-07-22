@@ -111,20 +111,22 @@ getAccessCodeUrl = (oAuth2Client) => {
 }
 
 
-getAccessToken = async (parameters) => {
+getAccessToken = (parameters) => {
   let {oAuth2Client, code} = parameters
   console.log(`Code: ${code}`)
-  await oAuth2Client.getToken(code, (err, token) => {
-    // stateController.setStateGoogleAuthCode(state, code)
-    console.log(`Error get token: ${err}`)
-    if (err) result = false
+  return new Promise((reject, resolve) => {
+    oAuth2Client.getToken(code, (err, token) => {
+      // stateController.setStateGoogleAuthCode(state, code)
+      console.log(`Error get token: ${err}`)
+      if (err) resolve(false)
 
-    // stateController.setStateGoogleAuthToken(state, token.access_token)
-    oAuth2Client.setCredentials(token)
-    result = true
+      // stateController.setStateGoogleAuthToken(state, token.access_token)
+      oAuth2Client.setCredentials(token)
+      resolve(true)
+    })
   })
-  console.log(`Result get token: ${result}`)
-  return result
+  // console.log(`Result get token: ${result}`)
+  // return result
 }
 
 exports.setupAuthClientGoogle = async (event) => {
