@@ -32,7 +32,7 @@ var fields = {
   isbn: 'isbn:'
 };
 
-exports.search = (query, options, callback) => {
+search = (query, options, callback) => {
   // Make the options object optional
   if (!_.isFunction(callback)) {
     callback = options
@@ -91,7 +91,7 @@ exports.search = (query, options, callback) => {
   })
 }
 
-exports.lookup = (volumeId, options, callback) => {
+lookup = (volumeId, options, callback) => {
 
   var query = {};
 
