@@ -167,7 +167,7 @@ exports.setupAuthClientGoogle = async (event) => {
         type: 'text',
         text: 'Code error/expire. Please try \'/init_google\' again'
       }
-    })
+    }, (error) => { console.log(`Error get access token: ${error}`)})
   }
 
   if (state.data.isConfirmedAuthGoogle) {
