@@ -87,7 +87,7 @@ exports.setupAuthClientGoogle = async (client, event) => {
     }
     client.replyMessage(event.replyToken, message)
   }
-  else if (state.data.googleAuthToken === '' && inputs.length > 1) {
+  else if (state.data.token.access_token === '' && inputs.length > 1) {
     getAccessToken({state: state, oAuth2Client: oAuth2Client, code: inputs[1]}).then((result) => {
       client.replyMessage(event.replyToken, {
         type: 'text',
