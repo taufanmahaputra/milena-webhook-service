@@ -147,19 +147,19 @@ exports.setupAuthClientGoogle = async (event) => {
     }
   }
 
-  if (currState.data.googleAuthToken === '' && inputs.length > 1) {
+  if (state.data.googleAuthToken === '' && inputs.length > 1) {
     if (await getAccessToken(state, oAuth2Client, inputs[1])) {
-        return {
-          type: 'text',
-          text: 'Congratulations! Succesfully registered to this xxxx@gmail.com account'
-        }
-      }
       return {
         type: 'text',
-        text: 'Code error/expire. Please try \'/init_google\' again'
+        text: 'Congratulations! Succesfully registered to this xxxx@gmail.com account'
       }
+    }
+    return {
+      type: 'text',
+      text: 'Code error/expire. Please try \'/init_google\' again'
+    }
   }
-  
+
   if (currState.data.isConfirmedAuthGoogle) {
     return {type: 'text', text: 'Already authenticated. You are ready to go!'}
   }
