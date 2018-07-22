@@ -10,16 +10,7 @@ const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_u
 
 let result
 
-function authorize (credentials, callback) {
-  // Check if we have previously stored a token.
-  fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getAccessToken({state: oAuth2Client, oAuth2Client: callback})
-    oAuth2Client.setCredentials(JSON.parse(token))
-    callback(oAuth2Client)
-  })
-}
-
-function listEvents (auth) {
+function listEvents (client, event, auth) {
   const calendar = google.calendar({version: 'v3', auth})
   calendar.events.list({
     calendarId: 'primary',
@@ -28,16 +19,17 @@ function listEvents (auth) {
     singleEvents: true,
     orderBy: 'startTime'
   }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err)
+    if (err) client.replyMessage(event.replyToken, {type: 'text', text: 'Not authenticated.'})
     const events = res.data.items
     if (events.length) {
-      console.log('Upcoming 10 events:')
+      let message = `Upcoming 10 events:\n`
       events.map((event, i) => {
         const start = event.start.dateTime || event.start.date
-        console.log(`${start} - ${event.summary}`)
+        message += `${start} - ${event.summary}\n`
       })
+      client.replyMessage(event.replyToken, {type: 'text', text: message})
     } else {
-      console.log('No upcoming events found.')
+      client.replyMessage(event.replyToken, {type: 'text', text: 'No upcoming events found..'})
     }
   })
 }
@@ -70,7 +62,7 @@ exports.listEventsOnCalendar = async (client, event) => {
 
   if (state.data.token) {
     oAuth2Client.setCredentials(state.data.token)
-    listEvents(oAuth2Client)
+    listEvents(client, event, oAuth2Client)
   }
   else {
     client.replyMessage(event.replyToken, {type: 'text', text: 'Not authenticated.'})
@@ -105,13 +97,13 @@ exports.setupAuthClientGoogle = async (client, event) => {
     getAccessToken({state: state, oAuth2Client: oAuth2Client, code: inputs[1]}).then((result) => {
       client.replyMessage(event.replyToken, {
         type: 'text',
-        text: 'Congratulations! Succesfully registered to this xxxx@gmail.com account'
+        text: 'Congratulations! Succesfully registered to your account.'
       })
     }, (error) => {
       console.log(`Error get access token: ${error}`)
       client.replyMessage(event.replyToken,{
         type: 'text',
-        text: 'Code error/expire. Please try \'/init_google\' again'
+        text: 'Code error or expires. Please try \'/init_google\' again.'
       })
     })
   }
