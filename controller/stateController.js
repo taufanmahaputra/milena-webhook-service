@@ -14,10 +14,10 @@ exports.getStateByUserId = async (event) => {
   return state
 }
 
-exports.setStateGoogleAuthCode = (state, code) => {
-  stateService.setStateGoogleAuthCode(state, code)
+exports.setStateGoogleAuthCode = async (state, code) => {
+  await stateService.setStateGoogleAuthCode(state, code)
 }
 
-exports.setStateGoogleAuthToken = (state, token) => {
-  stateService.setStateGoogleAuthToken(state, token)
+exports.setStateGoogleAuthToken = async (state, token) => {
+  await stateService.setStateGoogleAuthToken(state, token)
 }
