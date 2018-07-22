@@ -181,21 +181,7 @@ sendRequest = (path, params, callback) => {
   })
 }
 
-exports.getBookRecommendation = (client, event, query) => {
-  search(query, function(error, results) {
-    if ( ! error ) {
-      sendBookRecommendation(client, event, bookData)
-    } else {
-      console.log(error)
-      client.replyMessage(event.replyToken, {
-        type: 'text',
-        text: 'We got no recommendation books for you'
-      })
-    }
-});
-}
-
-exports.sendBookRecommendation = (client, event, bookData) => {
+sendBookRecommendation = (client, event, bookData) => {
   var bookCarousel = carouselController.newCarouselMessage('Book Carousel')
   var defaultAnswer = {
     type: 'text',
@@ -226,3 +212,18 @@ exports.sendBookRecommendation = (client, event, bookData) => {
       console.log(err)
     })
 }
+
+exports.getBookRecommendation = (client, event, query) => {
+  search(query, function(error, results) {
+    if ( ! error ) {
+      sendBookRecommendation(client, event, bookData)
+    } else {
+      console.log(error)
+      client.replyMessage(event.replyToken, {
+        type: 'text',
+        text: 'We got no recommendation books for you'
+      })
+    }
+});
+}
+
