@@ -11,13 +11,12 @@ exports.handleEvent = (client, event) => {
   else if (eventValidator.isMessageAndTextMessageType(event) && event.message.text.toLowerCase().includes('/init_google')) {
     authGoogleController.setupAuthClientGoogle(event).then((message) => {
       client.replyMessage(event.replyToken, message)
-      return Promise.resolve(true)
     })
   }
   else {
-    return Promise.resolve(null)
+    // return Promise.resolve(null)
   }
   // TODO: if your confidition, do return your result from your controller
 
-  return client.replyMessage(event.replyToken, echoController.echoMessage(event))
+  // return client.replyMessage(event.replyToken, echoController.echoMessage(event))
 }
