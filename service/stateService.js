@@ -6,7 +6,12 @@ exports.initState = (data) => {
     data: {
       userId: data.userId,
       googleAuthCode: '',
-      googleAuthToken: '',
+      token: {
+        access_token: '',
+        token_type: '',
+        refresh_token: '',
+        expiry_date: 0
+      },
       isConfirmedAuthGoogle: false,
       isFollowingBot: true
     }
@@ -26,10 +31,21 @@ exports.getStateByUserId = async (userId) => {
 }
 
 exports.setStateGoogleAuthCode = (state, code) => {
-  State.findOneAndUpdate({'data.userId': state.data.userId}, {'data.googleAuthCode': code})
+  State.findOneAndUpdate({'data.userId': state.data.userId}, {'data.googleAuthCode': code}, function (err, code) {
+    console.log(err)
+    console.log(code)
+  })
 }
 
 exports.setStateGoogleAuthToken = (state, token) => {
-  State.findOneAndUpdate({'data.userId': state.data.userId}, {'data.googleAuthToken': token, 'data.isConfirmedAuthGoogle': true})
+  State.findOneAndUpdate({'data.userId': state.data.userId},
+    {
+      'data.token.access_token': token.access_token, 'data.token.token_type': token.token_type,
+      'data.token.refresh_token': token.refresh_token, 'data.token.expiry_date': token.expiry_date
+    },
+    function(err, code) {
+      console.log(err)
+      console.log(code)
+    })
 }
 

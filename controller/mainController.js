@@ -1,5 +1,5 @@
 const eventValidator = require('../utils/eventValidator')
-const authGoogleController = require('./authGoogleController')
+const googleController = require('./authGoogleController')
 const echoController = require('./echoController')
 const calendarController = require('./calendarController')
 const wBooksController = require('./wBooksController')
@@ -10,9 +10,10 @@ exports.handleEvent = (client, event) => {
     stateController.initStateUser(event)
   }
   else if (eventValidator.isMessageAndTextMessageType(event) && event.message.text.toLowerCase().includes('/init_google')) {
-    authGoogleController.setupAuthClientGoogle(event).then((message) => {
-      client.replyMessage(event.replyToken, message)
-    })
+    googleController.setupAuthClientGoogle(client, event)
+  }
+  else if (eventValidator.isMessageAndTextMessageType(event) && event.message.text.toLowerCase() === '/list_events') {
+    googleController.listEventsOnCalendar(client, event)
   }
 
   // TODO: if your confidition, do return your result from your controller
