@@ -116,12 +116,12 @@ getAccessToken = (parameters) => {
   console.log(`Code: ${code}`)
   return new Promise((resolve, reject) => {
     oAuth2Client.getToken(code, (err, token) => {
-      // stateController.setStateGoogleAuthCode(state, code)
+      stateController.setStateGoogleAuthCode(state, code)
       console.log(`Error get token: ${err}`)
       if (err) reject(false)
 
       stateController.setStateGoogleAuthToken(state, token.access_token)
-      // oAuth2Client.setCredentials(token)
+      oAuth2Client.setCredentials(token)
       resolve(true)
     })
   })
