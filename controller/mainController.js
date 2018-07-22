@@ -9,7 +9,10 @@ exports.handleEvent = (client, event) => {
     stateController.initStateUser(event)
   }
   else if (eventValidator.isMessageAndTextMessageType(event) && event.message.text.toLowerCase().includes('/init_google')) {
-    return client.replyMessage(event.replyToken, authGoogleController.setupAuthClientGoogle(event))
+    authGoogleController.setupAuthClientGoogle(event).then((message) => {
+      client.replyMessage(event.replyToken, message)
+      return Promise.resolve(true)
+    })
   }
   else {
     return Promise.resolve(null)

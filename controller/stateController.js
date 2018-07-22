@@ -7,8 +7,8 @@ exports.initStateUser = (event) => {
   stateService.initState(state)
 }
 
-exports.getStateByUserId = (event) => {
-  const state = stateService.getStateByUserId(event.source.userId)
+exports.getStateByUserId = async (event) => {
+  const state = await stateService.getStateByUserId(event.source.userId)
   console.log('stateController.getStateByUserId')
   console.log(state)
   return state

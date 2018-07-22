@@ -119,12 +119,31 @@ getAccessToken = (state, oAuth2Client, code, cb) => {
   });
 }
 
-exports.setupAuthClientGoogle = (event) => {
+exports.setupAuthClientGoogle = async (event) => {
   const {client_secret, client_id, redirect_uris} = credentials.installed
   const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0])
   const inputs = event.message.text.split(' ')
 
-  console.log(stateController.getStateByUserId(event))
+  const state = await stateController.getStateByUserId(event)
+
+  if (state.data.googleAuthCode === '') {
+    const url = getAccessCodeUrl(oAuth2Client)
+    return {
+      type: 'template',
+      altText: 'Get your access code here',
+      template: {
+        type: 'buttons',
+        text: 'Please go to this link, and save following code for next step.',
+        actions: [
+          {
+            type: 'uri',
+            label: 'Get Code',
+            uri: url
+          }
+        ]
+      }
+    }
+  }
   // stateController.getStateByUserId(event, (state) => {
   //   let currState = state
   //
