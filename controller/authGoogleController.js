@@ -55,7 +55,7 @@ getAccessToken = (parameters) => {
       stateController.setStateGoogleAuthCode(state, code)
       if (err) reject(false)
       console.log(token)
-      stateController.setStateGoogleAuthToken(state, token.access_token)
+      stateController.setStateGoogleAuthToken(state, token)
       resolve(true)
     })
   })

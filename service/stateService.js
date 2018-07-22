@@ -33,9 +33,14 @@ exports.setStateGoogleAuthCode = (state, code) => {
 }
 
 exports.setStateGoogleAuthToken = (state, token) => {
-  State.findOneAndUpdate({'data.userId': state.data.userId}, {'data.googleAuthToken': token, 'data.isConfirmedAuthGoogle': true}, function(err, code) {
-    console.log(err)
-    console.log(code)
-  })
+  State.findOneAndUpdate({'data.userId': state.data.userId},
+    {
+      'data.token.access_token': token.access_token, 'data.token.token_type': token.token_type,
+      'data.token.refresh_token': token.refresh_token, 'data.token.expiry_date': token.expiry_date
+    },
+    function(err, code) {
+      console.log(err)
+      console.log(code)
+    })
 }
 
