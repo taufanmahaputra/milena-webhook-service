@@ -94,6 +94,24 @@ exports.lookup = (volumeId, options, callback) => {
       callback(null, parseBook(response), response);
   });
 };
+
+var parseBook = function(data) {
+  var book = _.pick(data.volumeInfo, [
+      'title', 'subtitle', 'authors', 'publisher', 'publishedDate', 'description',
+      'industryIdentifiers', 'pageCount', 'printType', 'categories', 'averageRating',
+      'ratingsCount', 'maturityRating', 'language'
+  ]);
+
+  _.extend(book, {
+      id: data.id,
+      link: data.volumeInfo.canonicalVolumeLink,
+      thumbnail: _.get(data, 'volumeInfo.imageLinks.thumbnail'),
+      images: _.pick(data.volumeInfo.imageLinks, ['small', 'medium', 'large', 'extraLarge'])
+  });
+
+  return book;
+};
+
 sendRequest = (path, params, callback) => {
   var url = BOOKS_API_BASE_URL
 
