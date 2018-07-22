@@ -112,7 +112,7 @@ getAccessCodeUrl = (oAuth2Client) => {
 
 
 getAccessToken = (parameters) => {
-  let {oAuth2Client, code} = parameters
+  let {state, oAuth2Client, code} = parameters
   console.log(`Code: ${code}`)
   return new Promise((reject, resolve) => {
     oAuth2Client.getToken(code, (err, token) => {
@@ -155,7 +155,7 @@ exports.setupAuthClientGoogle = async (event) => {
     }
   }
   else if (state.data.googleAuthToken === '' && inputs.length > 1) {
-    getAccessToken({oAuth2Client: oAuth2Client, code: inputs[1]}).then((result) => {
+    getAccessToken({state: state, oAuth2Client: oAuth2Client, code: inputs[1]}).then((result) => {
       if (result) {
         return {
           type: 'text',
