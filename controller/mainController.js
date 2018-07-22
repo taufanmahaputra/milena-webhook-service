@@ -1,5 +1,5 @@
 const eventValidator = require('../utils/eventValidator')
-const authGoogleController = require('./authGoogleController')
+const googleController = require('./authGoogleController')
 const echoController = require('./echoController')
 const calendarController = require('./calendarController')
 const stateController = require('./stateController')
@@ -9,7 +9,10 @@ exports.handleEvent = (client, event) => {
     stateController.initStateUser(event)
   }
   else if (eventValidator.isMessageAndTextMessageType(event) && event.message.text.toLowerCase().includes('/init_google')) {
-    authGoogleController.setupAuthClientGoogle(client, event)
+    googleController.setupAuthClientGoogle(client, event)
+  }
+  else if (eventValidator.isMessageAndTextMessageType(event) && event.message.text.toLowerCase() === '/list_events') {
+    googleController.listEventsOnCalendar(client, event)
   }
   else {
     // return Promise.resolve(null)

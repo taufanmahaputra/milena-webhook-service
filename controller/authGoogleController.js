@@ -5,6 +5,9 @@ const credentials = require('./credentials')
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 const TOKEN_PATH = 'token.json'
 
+const {client_secret, client_id, redirect_uris} = credentials.installed
+const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0])
+
 let result
 
 function authorize (credentials, callback) {
@@ -61,9 +64,19 @@ getAccessToken = (parameters) => {
   })
 }
 
+exports.listEventsOnCalendar = async (client, event) => {
+  const state = await stateController.getStateByUserId(event)
+
+  if (state.data.token) {
+    oAuth2Client.setCredentials(state.data.token)
+    listEvents(oAuth2Client)
+  }
+  else {
+    client.replyMessage(event.replyToken, {type: 'text', text: 'Not authenticated.'})
+  }
+}
+
 exports.setupAuthClientGoogle = async (client, event) => {
-  const {client_secret, client_id, redirect_uris} = credentials.installed
-  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0])
   const inputs = event.message.text.split(' ')
 
   const state = await stateController.getStateByUserId(event)
