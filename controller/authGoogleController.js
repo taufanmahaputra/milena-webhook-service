@@ -114,11 +114,11 @@ getAccessCodeUrl = (oAuth2Client) => {
 getAccessToken = (parameters) => {
   let {state, oAuth2Client, code} = parameters
   console.log(`Code: ${code}`)
-  return new Promise((reject, resolve) => {
+  return new Promise((resolve, reject) => {
     oAuth2Client.getToken(code, (err, token) => {
       // stateController.setStateGoogleAuthCode(state, code)
       console.log(`Error get token: ${err}`)
-      if (err) resolve(false)
+      if (err) reject(false)
 
       stateController.setStateGoogleAuthToken(state, token.access_token)
       // oAuth2Client.setCredentials(token)
@@ -129,7 +129,7 @@ getAccessToken = (parameters) => {
   // return result
 }
 
-exports.setupAuthClientGoogle = async (event) => {
+exports.setupAuthClientGoogle = async (client, event) => {
   const {client_secret, client_id, redirect_uris} = credentials.installed
   const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0])
   const inputs = event.message.text.split(' ')
@@ -138,7 +138,7 @@ exports.setupAuthClientGoogle = async (event) => {
 
   if ((state.data.googleAuthCode === '') && inputs.length == 1) {
     const url = getAccessCodeUrl(oAuth2Client)
-    return {
+    const message =  {
       type: 'template',
       altText: 'Get your access code here',
       template: {
@@ -153,22 +153,23 @@ exports.setupAuthClientGoogle = async (event) => {
         ]
       }
     }
+    client.replyMessage(event.replyToken, message)
   }
   else if (state.data.googleAuthToken === '' && inputs.length > 1) {
     getAccessToken({state: state, oAuth2Client: oAuth2Client, code: inputs[1]}).then((result) => {
-      if (result) {
-        return {
-          type: 'text',
-          text: 'Congratulations! Succesfully registered to this xxxx@gmail.com account'
-        }
-      }
-      return {
+      client.replyMessage(event.replyToken, {
+        type: 'text',
+        text: 'Congratulations! Succesfully registered to this xxxx@gmail.com account'
+      })
+    }, (error) => {
+      console.log(`Error get access token: ${error}`)
+      client.replyMessage(event.replyToken,{
         type: 'text',
         text: 'Code error/expire. Please try \'/init_google\' again'
-      }
-    }, (error) => { console.log(`Error get access token: ${error}`)})
+      })
+    })
   }
   else if (state.data.isConfirmedAuthGoogle) {
-    return {type: 'text', text: 'Already authenticated. You are ready to go!'}
+    return client.replyMessage(event.replyToken, {type: 'text', text: 'Already authenticated. You are ready to go!'})
   }
 }
