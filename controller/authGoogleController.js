@@ -5,7 +5,7 @@ const credentials = require('./credentials')
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 const TOKEN_PATH = 'token.json'
 
-let result
+var result
 
 function authorize (credentials, callback) {
   // Check if we have previously stored a token.
