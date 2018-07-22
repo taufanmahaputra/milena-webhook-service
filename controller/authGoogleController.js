@@ -116,11 +116,11 @@ getAccessToken = (parameters) => {
   console.log(`Code: ${code}`)
   return new Promise((reject, resolve) => {
     oAuth2Client.getToken(code, (err, token) => {
-      // stateController.setStateGoogleAuthCode(state, code)
+      stateController.setStateGoogleAuthCode(state, code)
       console.log(`Error get token: ${err}`)
       if (err) resolve(false)
 
-      // stateController.setStateGoogleAuthToken(state, token.access_token)
+      stateController.setStateGoogleAuthToken(state, token.access_token)
       oAuth2Client.setCredentials(token)
       resolve(true)
     })
@@ -154,8 +154,7 @@ exports.setupAuthClientGoogle = async (event) => {
       }
     }
   }
-
-  if (state.data.googleAuthToken === '' && inputs.length > 1) {
+  else if (state.data.googleAuthToken === '' && inputs.length > 1) {
     getAccessToken({oAuth2Client: oAuth2Client, code: inputs[1]}).then((result) => {
       if (result) {
         return {
@@ -169,8 +168,7 @@ exports.setupAuthClientGoogle = async (event) => {
       }
     }, (error) => { console.log(`Error get access token: ${error}`)})
   }
-
-  if (state.data.isConfirmedAuthGoogle) {
+  else if (state.data.isConfirmedAuthGoogle) {
     return {type: 'text', text: 'Already authenticated. You are ready to go!'}
   }
 }
