@@ -10,7 +10,7 @@ let result
 function authorize (credentials, callback) {
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
-    if (err) return getAccessToken(oAuth2Client, callback)
+    if (err) return getAccessToken({state: oAuth2Client, oAuth2Client: callback})
     oAuth2Client.setCredentials(JSON.parse(token))
     callback(oAuth2Client)
   })
@@ -58,7 +58,7 @@ exports.setupCalendar = (event) => {
   const oAuth2Client = new google.auth.OAuth2(
     client_id, client_secret, redirect_uris[0])
 
-  const url = getAccessToken(oAuth2Client)
+  const url = getAccessToken({state: oAuth2Client})
   console.log(url)
   console.log('setup calendar stop')
   return {
@@ -111,7 +111,8 @@ getAccessCodeUrl = (oAuth2Client) => {
 }
 
 
-getAccessToken = async (state, oAuth2Client, code) => {
+getAccessToken = async (parameters) => {
+  let {oAuth2Client, code} = parameters
   console.log(`Code: ${code}`)
   await oAuth2Client.getToken(code, (err, token) => {
     // stateController.setStateGoogleAuthCode(state, code)
@@ -153,7 +154,7 @@ exports.setupAuthClientGoogle = async (event) => {
   }
 
   if (state.data.googleAuthToken === '' && inputs.length > 1) {
-    if (await getAccessToken(state, oAuth2Client, inputs[1])) {
+    if (await getAccessToken({oAuth2Client: oAuth2Client, code: inputs[1]})) {
       return {
         type: 'text',
         text: 'Congratulations! Succesfully registered to this xxxx@gmail.com account'
