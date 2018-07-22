@@ -5,6 +5,8 @@ const credentials = require('./credentials')
 const SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 const TOKEN_PATH = 'token.json'
 
+let result
+
 function authorize (credentials, callback) {
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, (err, token) => {
@@ -108,16 +110,19 @@ getAccessCodeUrl = (oAuth2Client) => {
   return authUrl
 }
 
+
 getAccessToken = async (state, oAuth2Client, code) => {
-  let result
+  console.log(`Code: ${code}`)
   await oAuth2Client.getToken(code, (err, token) => {
     stateController.setStateGoogleAuthCode(state, code)
+    console.log(`Error get token: ${err}`)
     if (err) result = false
 
     stateController.setStateGoogleAuthToken(state, token)
     oAuth2Client.setCredentials(token)
     result = true
   })
+  console.log(`Result get token: ${result}`)
   return result
 }
 
