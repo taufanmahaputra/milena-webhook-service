@@ -131,6 +131,7 @@ var parseBook = function(data) {
 
   _.extend(book, {
       id: data.id,
+      webReaderLink: data.accessInfo.webReaderLink,
       link: data.volumeInfo.canonicalVolumeLink,
       thumbnail: _.get(data, 'volumeInfo.imageLinks.thumbnail'),
       images: _.pick(data.volumeInfo.imageLinks, ['small', 'medium', 'large', 'extraLarge'])
@@ -180,17 +181,7 @@ sendRequest = (path, params, callback) => {
   })
 }
 
-exports.getBookRecommendation = (query) => {
-  search(query, function(error, results) {
-    if ( ! error ) {
-        console.log(results);
-    } else {
-        console.log(error);
-    }
-});
-}
-
-exports.sendBookRecommendation = (client, event, bookData) => {
+sendBookRecommendation = (client, event, bookData) => {
   var bookCarousel = carouselController.newCarouselMessage('Book Carousel')
   var defaultAnswer = {
     type: 'text',
@@ -207,7 +198,7 @@ exports.sendBookRecommendation = (client, event, bookData) => {
       label: 'Read Now',
       uri: book.webReaderLink
     }]
-    var columns = carouselController.newColumn(book.imageLinks.thumbnail, '#FFFFFF', book.title, book.description, book.infoLink, actions)
+    var columns = carouselController.newColumn(book.thumbnail, '#FFFFFF', book.title, book.description, book.link, actions)
     bookCarousel.template.columns.push(columns)
   })
   if (bookCarousel.template.columns.length <= 0) {
@@ -221,3 +212,18 @@ exports.sendBookRecommendation = (client, event, bookData) => {
       console.log(err)
     })
 }
+
+exports.getBookRecommendation = (client, event, query) => {
+  search(query, function(error, results) {
+    if ( ! error ) {
+      sendBookRecommendation(client, event, bookData)
+    } else {
+      console.log(error)
+      client.replyMessage(event.replyToken, {
+        type: 'text',
+        text: 'We got no recommendation books for you'
+      })
+    }
+});
+}
+
